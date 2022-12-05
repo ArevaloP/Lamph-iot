@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const {check} = require('express-validator');
 
-const { agregarLamph, obtenerLamphs, actualizarLamphs } = require('../controllers/lamph.controller');
+const { agregarLamph, obtenerLamphs, actualizarLamphs, obtenerActivoRangoFechas } = require('../controllers/lamph.controller');
 const { validarCampos } = require('../middlewares/validar-campos.middleware');
 
 const router = Router();
@@ -14,6 +14,8 @@ router.post('/', [
 ], agregarLamph);
 
 router.get('/', obtenerLamphs)
+
+router.get('/sensor', obtenerActivoRangoFechas);
 
 router.put('/:id',[
     check('id', 'Id No valido').isMongoId(),

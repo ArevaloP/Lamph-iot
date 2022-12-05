@@ -81,8 +81,42 @@ const actualizarLamphs = async(req=request, res=response)=>{
     }
 }
 
+const obtenerActivoRangoFechas = async(req=request, res=response) =>{
+
+    const {fecha_inicio_param, fecha_fin_param} = req.query;
+
+    console.log('Fecha Inicio: ', fecha_inicio_param);
+    console.log('Fecha fin: ', fecha_fin_param);
+
+    try{
+
+        const data = await lamph.find({
+            estado_sensor: true,
+            fecha_inicio: {
+                $gte: fecha_fin_param,
+                $lt: fecha_fin_param
+            }
+        });
+
+        res.status(200).json({
+            ok: true,
+            data
+        })
+    }
+    catch(e){
+        console.log(e);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error en el servidor'
+        });
+    }
+
+
+}
+
 module.exports = {
     agregarLamph,
     obtenerLamphs,
-    actualizarLamphs
+    actualizarLamphs,
+    obtenerActivoRangoFechas
 }
